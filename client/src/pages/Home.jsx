@@ -14,7 +14,7 @@ const Home = () => {
 
   const logout = async () => {
     await axios
-      .get("https://authguard-secure-authentication-system.onrender.com/api/v1/user/logout", {
+      .get("https://authguard-secure-authentication-system.onrender.com", {
         withCredentials: true,
       })
       .then((res) => {
