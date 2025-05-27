@@ -16,7 +16,7 @@ const Login = () => {
   } = useForm();
   const handleLogin = async (data) => {
     await axios
-      .post("https://authguard-secure-authentication-system.onrender.com", data, {
+      .post("https://authguard-secure-authentication-system.onrender.com/api/v1/user/login", data, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
