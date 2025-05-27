@@ -15,7 +15,7 @@ const ResetPassword = () => {
     e.preventDefault();
     await axios
       .put(
-        `https://authguard-secure-authentication-system.onrender.com/api/v1/user/password/reset/${token}`,
+        `https://authguard-secure-authentication-system.onrender.com${token}`,
         { password, confirmPassword },
         {
           withCredentials: true,
