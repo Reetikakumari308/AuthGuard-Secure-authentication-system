@@ -11,9 +11,12 @@ import Footer from "../layout/Footer";
 const Home = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
 
+  const BASE_URL = process.env.REACT_APP_BACKEND_URL;
+
+
   const logout = async () => {
     await axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/logout`, {
+      .get(`${BASE_URL}/api/v1/user/logout`, {
         withCredentials: true,
       })
       .then((res) => {
