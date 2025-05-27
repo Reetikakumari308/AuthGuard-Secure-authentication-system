@@ -15,8 +15,7 @@ const allowedOrigins = [
   "http://localhost:3000",  // your local frontend URL for testing
 ];
 
-// Security headers
-app.use(helmet());
+
 
 // CORS config
 app.use(
