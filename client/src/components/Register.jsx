@@ -21,7 +21,7 @@ const Register = () => {
     }
 
     await axios
-      .post("https://authguard-secure-authentication-system.onrender.com/api/v1/user/register", data, {
+      .post("https://authguard-secure-authentication-system.onrender.com", data, {
         withCredentials: true,
         headers: { "Content-Type": "application/json" },
       })
