@@ -11,7 +11,7 @@ const OtpVerification = () => {
   const [otp, setOtp] = useState(["", "", "", "", ""]);
 
   const handleChange = (value, index) => {
-    if (!/^\d*$/.test(value)) return;
+    if (!/^\d*$/.test(value)) return; // only digits allowed
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
@@ -30,26 +30,28 @@ const OtpVerification = () => {
   const handleOtpVerification = async (e) => {
     e.preventDefault();
     const enteredOtp = otp.join("");
-    const data = {
-      email,
-      otp: enteredOtp,
-      phone,
-    };
-    await axios
-      .post("https://authguard-secure-authentication-system.onrender.com", data, {
-        withCredentials: true,
-        headers: { "Content-Type": "application/json" },
-      })
-      .then((res) => {
-        toast.success(res.data.message);
-        setIsAuthenticated(true);
-        setUser(res.data.user);
-      })
-      .catch((err) => {
-        toast.error(err.response.data.message);
-        setIsAuthenticated(false);
-        setUser(null);
-      });
+    const data = { email, otp: enteredOtp, phone };
+
+    const baseURL = process.env.REACT_APP_API_BASE_URL;
+
+    try {
+      const res = await axios.post(
+        `${baseURL}/api/v1/user/otp-verification`,
+        data,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+
+      toast.success(res.data.message);
+      setIsAuthenticated(true);
+      setUser(res.data.user);
+    } catch (err) {
+      toast.error(err.response?.data?.message || "OTP verification failed");
+      setIsAuthenticated(false);
+      setUser(null);
+    }
   };
 
   if (isAuthenticated) {
@@ -57,35 +59,31 @@ const OtpVerification = () => {
   }
 
   return (
-    <>
-      <div className="otp-verification-page">
-        <div className="otp-container">
-          <h1>OTP Verification</h1>
-          <p>Enter the 5-digit OTP sent to your registered email or phone.</p>
-          <form onSubmit={handleOtpVerification} className="otp-form">
-            <div className="otp-input-container">
-              {otp.map((digit, index) => {
-                return (
-                  <input
-                  id={`otp-input-${index}`}
-                    type="text"
-                    maxLength="1"
-                    key={index}
-                    value={digit}
-                    onChange={(e) => handleChange(e.target.value, index)}
-                    onKeyDown={(e) => handleKeyDown(e, index)}
-                    className="otp-input"
-                  />
-                );
-              })}
-            </div>
-            <button type="submit" className="verify-button">
-              Verify OTP
-            </button>
-          </form>
-        </div>
+    <div className="otp-verification-page">
+      <div className="otp-container">
+        <h1>OTP Verification</h1>
+        <p>Enter the 5-digit OTP sent to your registered email or phone.</p>
+        <form onSubmit={handleOtpVerification} className="otp-form">
+          <div className="otp-input-container">
+            {otp.map((digit, index) => (
+              <input
+                id={`otp-input-${index}`}
+                type="text"
+                maxLength="1"
+                key={index}
+                value={digit}
+                onChange={(e) => handleChange(e.target.value, index)}
+                onKeyDown={(e) => handleKeyDown(e, index)}
+                className="otp-input"
+              />
+            ))}
+          </div>
+          <button type="submit" className="verify-button">
+            Verify OTP
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 
