@@ -12,7 +12,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     await axios
       .post(
-        "https://authguard-secure-authentication-system.onrender.com/api/v1/user/password/forgot",
+        "https://authguard-secure-authentication-system.onrender.com",
         { email },
         {
           withCredentials: true,
