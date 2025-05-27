@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { Context } from "../main";
 import { Link, useNavigate } from "react-router-dom";
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Login = () => {
   const { setIsAuthenticated, setUser } = useContext(Context);
   const navigateTo = useNavigate();
@@ -14,9 +16,10 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
   const handleLogin = async (data) => {
     await axios
-      .post("https://authguard-secure-authentication-system.onrender.com", data, {
+      .post(`${BASE_URL}/api/v1/user/login`, data, {
         withCredentials: true,
         headers: {
           "Content-Type": "application/json",
@@ -29,9 +32,10 @@ const Login = () => {
         navigateTo("/");
       })
       .catch((error) => {
-        toast.error(error.response.data.message);
+        toast.error(error.response?.data?.message || "Login failed");
       });
   };
+
   return (
     <>
       <form
@@ -61,3 +65,4 @@ const Login = () => {
 };
 
 export default Login;
+
