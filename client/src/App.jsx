@@ -17,19 +17,27 @@ const App = () => {
   useEffect(() => {
     const getUser = async () => {
       const baseURL = process.env.REACT_APP_BACKEND_URL;
-      await axios
-        .get(`${baseURL}/api/v1/user/me`, { withCredentials: true })  // Adjust endpoint as per your backend
-        .then((res) => {
-          setUser(res.data.user);
-          setIsAuthenticated(true);
-        })
-        .catch((err) => {
-          setUser(null);
-          setIsAuthenticated(false);
+
+      if (!baseURL) {
+        console.error("❌ REACT_APP_BACKEND_URL is not defined!");
+        return;
+      }
+
+      try {
+        const res = await axios.get(`${baseURL}/api/v1/user/me`, {
+          withCredentials: true,
         });
+        setUser(res.data.user);
+        setIsAuthenticated(true);
+      } catch (err) {
+        console.error("⚠️ Failed to fetch user:", err);
+        setUser(null);
+        setIsAuthenticated(false);
+      }
     };
+
     getUser();
-  }, []);
+  }, [setUser, setIsAuthenticated]);
 
   return (
     <>
@@ -37,10 +45,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
-          <Route
-            path="/otp-verification/:email/:phone"
-            element={<OtpVerification />}
-          />
+          <Route path="/otp-verification/:email/:phone" element={<OtpVerification />} />
           <Route path="/password/forgot" element={<ForgotPassword />} />
           <Route path="/password/reset/:token" element={<ResetPassword />} />
         </Routes>
