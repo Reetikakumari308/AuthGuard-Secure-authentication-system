@@ -14,7 +14,7 @@ const ResetPassword = () => {
   const handleResetPassword = async (e) => {
     e.preventDefault();
 
-    const baseURL = process.env.REACT_APP_API_BASE_URL;
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
 
     try {
       const res = await axios.put(
