@@ -1,3 +1,16 @@
+import React, { useContext } from "react";
+import Hero from "../components/Hero";
+import Instructor from "../components/Instructor";
+import Technologies from "../components/Technologies";
+import "../styles/Home.css";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { Context } from "../main";
+import { Navigate, useNavigate } from "react-router-dom";
+import Footer from "../layout/Footer";
+
+const Home = () => {
+  const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
 const logout = async () => {
   await axios
     .get(`${process.env.REACT_APP_BACKEND_URL}/api/v1/user/logout`, {
@@ -14,3 +27,4 @@ const logout = async () => {
     });
 };
 
+export default Home;
