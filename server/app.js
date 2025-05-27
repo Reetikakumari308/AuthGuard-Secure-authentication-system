@@ -12,11 +12,12 @@ dotenv.config({ path: "./.env" });
 
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL],
+    origin: ["https://authguard-secure-authentication-system-2.onrender.com"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
+
 
 app.use(cookieParser());
 app.use(express.json());
