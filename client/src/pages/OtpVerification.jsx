@@ -32,7 +32,7 @@ const OtpVerification = () => {
     const enteredOtp = otp.join("");
     const data = { email, otp: enteredOtp, phone };
 
-    const baseURL = process.env.REACT_APP_API_BASE_URL;
+    const baseURL = process.env.REACT_APP_BACKEND_URL;
 
     try {
       const res = await axios.post(
