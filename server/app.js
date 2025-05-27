@@ -18,10 +18,14 @@ app.use(
   })
 );
 
-
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Root route to confirm backend is running
+app.get("/", (req, res) => {
+  res.send("Backend server is running!");
+});
 
 app.use("/api/v1/user", userRouter);
 
