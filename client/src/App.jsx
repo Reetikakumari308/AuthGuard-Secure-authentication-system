@@ -17,7 +17,7 @@ const App = () => {
   useEffect(() => {
     const getUser = async () => {
       await axios
-        .get("https://authguard-secure-authentication-system.onrender.com/api/v1/user/me", { withCredentials: true })
+        .get("https://authguard-secure-authentication-system.onrender.com", { withCredentials: true })
         .then((res) => {
           setUser(res.data.user);
           setIsAuthenticated(true);
