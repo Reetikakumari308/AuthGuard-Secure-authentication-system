@@ -12,7 +12,6 @@ dotenv.config({ path: "./.env" });
 
 const allowedOrigins = [
   "https://authguard-secure-authentication-system-2.onrender.com",
-  "http://localhost:3000",  // your local frontend URL for testing
 ];
 
 
