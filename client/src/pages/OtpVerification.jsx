@@ -36,7 +36,7 @@ const OtpVerification = () => {
       phone,
     };
     await axios
-      .post("https://authguard-secure-authentication-system.onrender.com/api/v1/user/otp-verification", data, {
+      .post("https://authguard-secure-authentication-system.onrender.com", data, {
         withCredentials: true,
         headers: { "Content-Type": "application/json" },
       })
