@@ -16,8 +16,9 @@ const App = () => {
 
   useEffect(() => {
     const getUser = async () => {
+      const baseURL = process.env.REACT_APP_API_BASE_URL;
       await axios
-        .get("https://authguard-secure-authentication-system.onrender.com", { withCredentials: true })
+        .get(`${baseURL}/api/v1/user/me`, { withCredentials: true })  // Adjust endpoint as per your backend
         .then((res) => {
           setUser(res.data.user);
           setIsAuthenticated(true);
