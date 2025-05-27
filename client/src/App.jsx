@@ -16,7 +16,7 @@ const App = () => {
 
   useEffect(() => {
     const getUser = async () => {
-      const baseURL = process.env.REACT_APP_API_BASE_URL;
+      const baseURL = process.env.REACT_APP_BACKEND_URL;
       await axios
         .get(`${baseURL}/api/v1/user/me`, { withCredentials: true })  // Adjust endpoint as per your backend
         .then((res) => {
