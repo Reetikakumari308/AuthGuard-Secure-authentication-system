@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+const BASE_URL = process.env.REACT_APP_BACKEND_URL;
+
 const Register = () => {
   const { isAuthenticated } = useContext(Context);
   const navigateTo = useNavigate();
@@ -21,7 +23,7 @@ const Register = () => {
     }
 
     await axios
-      .post("https://authguard-secure-authentication-system.onrender.com", data, {
+      .post(`${BASE_URL}/api/v1/user/register`, data, {
         withCredentials: true,
         headers: { "Content-Type": "application/json" },
       })
