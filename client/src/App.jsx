@@ -40,17 +40,19 @@ const App = () => {
 
   return (
     <>
-      <Routes>
-  <Route
-    path="/"
-    element={isAuthenticated ? <Home /> : <Navigate to="/auth" replace />}
-  />
-  <Route path="/auth" element={<Auth />} />
-  <Route path="/otp-verification" element={<OtpVerification />} />
-  <Route path="/password/forgot" element={<ForgotPassword />} />
-  <Route path="/password/reset/:token" element={<ResetPassword />} />
-</Routes>
-
+      <Router>
+        <Routes>
+          <Route
+            path="/"
+            element={isAuthenticated ? <Home /> : <Navigate to="/auth" replace />}
+          />
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/otp-verification" element={<OtpVerification />} />
+          <Route path="/password/forgot" element={<ForgotPassword />} />
+          <Route path="/password/reset/:token" element={<ResetPassword />} />
+        </Routes>
+        <ToastContainer theme="colored" />
+      </Router>
     </>
   );
 };
