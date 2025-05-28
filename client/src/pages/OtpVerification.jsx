@@ -1,17 +1,33 @@
-import React, { useContext, useState } from "react";
+
+  import React, { useContext, useState, useEffect } from "react";
 import "../styles/OtpVerification.css";
 import axios from "axios";
-import { Navigate, useParams } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Context } from "../main";
 
 const OtpVerification = () => {
   const { isAuthenticated, setIsAuthenticated, setUser } = useContext(Context);
-  const { email, phone } = useParams();
   const [otp, setOtp] = useState(["", "", "", "", ""]);
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  // Get email and phone securely from localStorage
+  useEffect(() => {
+    const savedEmail = localStorage.getItem("otpEmail");
+    const savedPhone = localStorage.getItem("otpPhone");
+
+    if (!savedEmail || !savedPhone) {
+      toast.error("Missing OTP verification data");
+      return;
+    }
+
+    setEmail(savedEmail);
+    setPhone(savedPhone);
+  }, []);
 
   const handleChange = (value, index) => {
-    if (!/^\d*$/.test(value)) return; // only digits allowed
+    if (!/^\d*$/.test(value)) return;
     const newOtp = [...otp];
     newOtp[index] = value;
     setOtp(newOtp);
@@ -31,7 +47,6 @@ const OtpVerification = () => {
     e.preventDefault();
     const enteredOtp = otp.join("");
     const data = { email, otp: enteredOtp, phone };
-
     const baseURL = process.env.REACT_APP_BACKEND_URL;
 
     try {
